@@ -24,7 +24,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = 'django-insecure-x(7@ck_5i#_y5w-#!r_jhl5#u$1&nb7u21te3t3uc#!&zv531k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver", "cdimop.pythonanywhere.com"]
 
