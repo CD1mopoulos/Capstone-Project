@@ -1,0 +1,12 @@
+{% extends 'checkout/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="text-center">
+        <h2>🎉 Thank you for your order!</h2>
+        <p>Your payment was successful.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary mt-3">🏠 Back to Home</a>
+    </div>
+</div>
+{% endblock %}

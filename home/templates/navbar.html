@@ -1,0 +1,508 @@
+{% load static %}
+{% load socialaccount %}
+ <!-- NAVBAR -->
+ <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand d-inline-block"  {% if request.get_full_path == '/home' and '#hero' in request.get_full_path %}active{% endif %}" href="{% url 'home' %}#hero"">
+            <img src="{% static 'images/Logo_Final.png' %}" alt="logo picture" class="w-auto">
+        </a>
+        {% if user.is_authenticated %}
+        <style>
+            /* Base style for detecting location box */
+            .location-box {
+                padding: 6px 16px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 6px;
+                background-color: transparent;
+                font-size: 0.95rem;
+                text-align: center;
+                line-height: 1.4;
+                white-space: nowrap;
+            }
+        
+            /* Responsive adjustments */
+            @media (max-width: 767.98px) {
+                .location-box {
+                    padding: 4px 10px;
+                    font-size: 0.75rem;
+                    line-height: 1.2;
+                    border-radius: 4px;
+                }
+        
+                #navbarLocation {
+                    font-size: 0.75rem;
+                }
+            }
+        </style>
+        
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <div class="location-box">
+                    <span id="navbarLocation">📍 Detecting location...</span>
+                </div>
+            </li>
+        </ul>
+    {% endif %}        
+    <!-- Toggler button for small screens -->
+    <button class="navbar-toggler shadow-none border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Desktop Navbar -->
+    <div class="collapse navbar-collapse d-none d-lg-flex">
+        <ul class="navbar-nav justify-content-center flex-grow-1 fs-6">
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" id="homeLink" href="{% url 'home' %}#hero">Home</a>
+            </li>
+            {% if user.is_authenticated and user.is_restaurant %}
+            <li class="nav-item dropdown mx-2">
+                <a class="nav-link section-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menus
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="menuDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'home' %}#menu_containers">
+                            <i class="fas fa-list me-1"></i> View Menus
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'dish_list' %}">
+                            <i class="fas fa-utensils me-1"></i> Manage Dishes
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {% else %}
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" id="menuLink" href="{% url 'home' %}#menu_containers">Menus</a>
+            </li>
+            {% endif %}
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" id="aboutLink" href="{% url 'aboutus:aboutus' %}">About Us</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" id="contactLink" href="{% url 'contact:contact' %}">Contact Us</a>
+            </li>                
+            <form method="GET" action="{% url 'search_results' %}" class="search-bar d-flex align-items-center">
+                <input type="search" name="q" class="search-input form-control" pattern=".*\S.*" placeholder="Search...">
+                <button class="btn search-btn d-flex justify-content-center align-items-center" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>                               
+        </ul>
+        <div class="navbar-icons d-flex align-items-center gap-3">
+            {% if user.is_authenticated %}
+                <!-- Profile -->
+                <i class="fas fa-user-circle text-white" id="profile-icon" style="cursor: pointer;"></i>
+        
+                {% if user.is_superuser %}
+                <a href="/admin/" class="nav-link p-0 text-white" title="Admin Panel">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+                {% endif %}
+        
+                {% if user.is_delivery %}
+                <a class="nav-link p-0 text-white" href="{% url 'platform_db:delivery_dashboard' %}">
+                    <i class="fas fa-motorcycle"></i>
+                </a>
+                {% endif %}
+        
+                <!-- Cart -->
+                <i class="fas fa-shopping-cart text-white position-relative" id="cart-icon" style="cursor: pointer;">
+                    <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">0</span>
+                </i>
+        
+                <!-- Logout -->
+                <a href="{% url 'platform_db:logout' %}" class="nav-link p-0 text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+        
+            {% else %}
+                <button class="btn btn-outline-light mx-1" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                <button class="btn btn-outline-light mx-1" data-bs-toggle="modal" data-bs-target="#signupModal">Signup</button>
+            {% endif %}
+        </div>        
+    </div>
+</div>
+    
+<!-- Offcanvas for small screens -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-white" id="offcanvasNavbarLabel"></h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 fs-6">
+
+            <!-- Home -->
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" href="{% url 'home' %}#hero">Home</a>
+            </li>
+
+            <!-- Menus -->
+            {% if user.is_authenticated and user.is_restaurant %}
+                <li class="nav-item dropdown mx-2">
+                    <a class="nav-link section-link dropdown-toggle" href="#" id="menuDropdownOffcanvas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Menus
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="menuDropdownOffcanvas">
+                        <li><a class="dropdown-item" href="{% url 'home' %}#menu_containers"><i class="fas fa-list me-1"></i> View Menus</a></li>
+                        <li><a class="dropdown-item" href="{% url 'dish_list' %}"><i class="fas fa-utensils me-1"></i> Manage Dishes</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item mx-2">
+                    <a class="nav-link section-link" href="{% url 'home' %}#menu_containers">Menus</a>
+                </li>
+            {% endif %}
+
+            <!-- About Us -->
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" href="{% url 'aboutus:aboutus' %}">About Us</a>
+            </li>
+
+            <!-- Contact Us -->
+            <li class="nav-item mx-2">
+                <a class="nav-link section-link" href="{% url 'contact:contact' %}">Contact Us</a>
+            </li>
+
+            <!-- Search -->
+            <form method="GET" action="{% url 'search_results' %}" class="search-bar d-flex align-items-center mt-3 mb-3">
+                <input type="search" name="q" class="form-control pe-5 text-dark bg-white border-0" placeholder="Search..." pattern=".*\S.*">
+                <button class="btn btn-light ms-2" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            {% if user.is_authenticated %}
+            <li class="nav-item mx-2 d-flex justify-content-center mb-3 gap-3">
+                <!-- Profile -->
+                <i class="fas fa-user-circle text-white" id="profile-icon-offcanvas" style="cursor: pointer;"></i>
+            
+                {% if user.is_superuser %}
+                <a href="/admin/" class="nav-link p-0 text-white" title="Admin Panel">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+                {% endif %}
+            
+                {% if user.is_delivery %}
+                <a class="nav-link p-0 text-white" href="{% url 'platform_db:delivery_dashboard' %}">
+                    <i class="fas fa-motorcycle"></i>
+                </a>
+                {% endif %}
+            
+                <!-- Cart -->
+                <i class="fas fa-shopping-cart text-white position-relative" id="cart-icon-offcanvas" style="cursor: pointer;">
+                    <span id="cartBadgeOffcanvas" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">0</span>
+                </i>
+            
+            <!-- Logout -->
+            <a href="{% url 'platform_db:logout' %}" class="nav-link p-0 text-white d-flex align-items-center" style="line-height: 1;">
+                <i class="fas fa-right-from-bracket fs-5 text-white"></i>
+            </a>
+            {% else %}
+            <li class="nav-item mx-2">
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-light px-4 py-2 rounded-pill w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Login
+                    </button>
+                    <button class="btn btn-light px-4 py-2 rounded-pill w-100" data-bs-toggle="modal" data-bs-target="#signupModal">
+                        Signup
+                    </button>
+                </div>
+            </li>
+        {% endif %}
+        
+        </ul>
+    </div>
+</div>
+
+
+<!-- IONICONS for search icon (🔍) -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</nav>
+
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content frosted-modal">
+            <div class="modal-header border-0">
+                <h5 class="modal-title w-100 text-white" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body fs-6 fs-sm-5 fs-md-6">
+                <form id="loginForm" action="{% url 'account_login' %}" method="POST">
+                    {% csrf_token %}
+
+                    <!-- Username Field -->
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="loginUsername" name="username" placeholder=" " required>
+                        <label for="loginUsername" class="form-label text-white">Username</label>
+                        <div id="usernameError" class="text-danger mt-1"></div>
+                    </div>
+
+                    <!-- Password Field with Toggle Icon -->
+                    <div class="form-floating mb-4 position-relative">
+                        <input type="password" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="loginPassword" name="password" placeholder=" " required>
+                        <label for="loginPassword" class="form-label text-white">Password</label>
+                        <ion-icon name="eye-off-outline" id="eyeIconLogin" class="position-absolute end-0 me-3 mt-2"
+                                  onclick="togglePasswordVisibilityLogin()"></ion-icon>
+                        <div id="passwordError" class="text-danger mt-1"></div>
+                    </div>
+
+                    <!-- Remember Me Checkbox -->
+                    <div class="mb-3 d-flex justify-content-center">
+                        <input type="checkbox" class="form-check-input me-2" id="rememberMe" name="remember_me">
+                        <label for="rememberMe" class="form-check-label text-white">Remember Me</label>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="btn text-black bg-white w-100 custom-radius">Login</button>
+
+                    <!-- OR SIGN IN WITH -->
+                    <div class="loginwith option-text mt-4 text-white text-center">
+                        <hr>
+                        <p>or Login in with</p>
+                    </div>
+
+                    <!-- OAuth Buttons -->
+                    <div class="d-flex gap-2 mt-3">
+                        <!-- Google -->
+                        <a href="{% provider_login_url 'google' method='oauth2' %}" 
+                           class="btn btn-danger flex-fill d-flex align-items-center justify-content-center">
+                            <i class="fab fa-google me-2"></i> Google
+                        </a>
+                        
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-position">
+        <div class="modal-content frosted-modal">
+            <div class="modal-header border-0">
+                <h5 class="modal-title w-100 text-white" id="signupModalLabel">Sign Up</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body fs-6 fs-sm-5 fs-md-6 mt-0">
+                <form id="signupForm" method="POST" action="{% url 'platform_db:signup' %}">
+                    {% csrf_token %}
+
+                    <!-- Name -->
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="signupName" name="name" placeholder=" " required autocomplete="given-name">
+                        <label for="signupName" class="form-label text-white">Name</label>
+                    </div>
+
+                    <!-- Surname -->
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="signupSureName" name="surename" placeholder=" " required autocomplete="family-name">
+                        <label for="signupSureName" class="form-label text-white">Surname</label>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="signupUsername" name="username" placeholder=" " required autocomplete="username">
+                        <label for="signupUsername" class="form-label text-white">Username</label>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-floating mb-4">
+                        <ion-icon name="mail-outline" id="mailIcon"></ion-icon>
+                        <input type="email" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="signupEmail" name="email" placeholder=" " required autocomplete="email">
+                        <label for="signupEmail" class="form-label text-white">Email</label>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-floating mb-4">
+                        <ion-icon name="eye-off-outline" id="eyeIconSignup" onclick="togglePasswordVisibilitySignUp()"></ion-icon>
+                        <input type="password" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="signupPassword" name="password1" placeholder=" " required autocomplete="new-password">
+                        <label for="signupPassword" class="form-label text-white">Password</label>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-floating mb-4">
+                        <ion-icon name="eye-off-outline" id="eyeIconSignupConfirm" onclick="togglePasswordVisibilitySignUpConfirm()"></ion-icon>
+                        <input type="password" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none" 
+                               id="signupConfirmPassword" name="password2" placeholder=" " required autocomplete="new-password">
+                        <label for="signupConfirmPassword" class="form-label text-white">Confirm Password</label>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mb-3 d-flex justify-content-center">
+                        <input type="checkbox" class="form-check-input me-2" id="termsConditions" required>
+                        <label for="termsConditions" class="form-check-label text-white">
+                            I agree to the <a href="{% url 'terms_conditions' %}" class="text-white" target="_blank">Terms and Conditions</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn text-black bg-white w-100 custom-radius">Sign Up</button>
+                </form>
+
+                <!-- Signup Message Display -->
+                <div id="signupMessage" class="text-center mt-3"></div>
+
+                <!-- OR SIGN UP WITH -->
+                <div class="signupwith option-text text-white  mt-4">
+                    <hr>
+                    <p class="mt-0">or sign up with</p>
+                </div>
+
+                <!-- OAuth Buttons -->
+                <div class="d-flex gap-2 mt-3">
+                    <!-- Google Signup Button -->
+                    <a href="{% provider_login_url 'google' method='oauth2' %}" 
+                       class="btn btn-danger flex-fill d-flex align-items-center justify-content-center">
+                        <i class="fab fa-google me-2"></i> Google
+                    </a>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const loginForm = document.querySelector("#loginModal form");
+        const signUpForm = document.querySelector("#signupModal form");
+      
+        const loginFields = document.querySelectorAll("#loginEmail, #loginPassword");
+        const signUpFields = document.querySelectorAll(
+          "#signupName, #signupSureName, #signupUsername, #signupEmail, #signupPassword, #signupConfirmPassword, #termsConditions"
+        );
+      
+        const googleButtons = document.querySelectorAll(".btn-google");
+        //const facebookButtons = document.querySelectorAll(".btn-facebook");
+      
+        // Disable 'required' attributes for external login
+        const disableRequiredFields = (fields) => {
+          fields.forEach((field) => field.removeAttribute("required"));
+        };
+      
+        // Re-enable 'required' attributes for regular login/signup
+        const enableRequiredFields = (fields) => {
+          fields.forEach((field) => field.setAttribute("required", "true"));
+        };
+      
+        // Handle Google/Facebook login buttons
+        [...googleButtons, ...facebookButtons].forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent form submission
+            if (button.closest("#loginModal")) {
+              disableRequiredFields(loginFields);
+              console.log("Simulating Google/Facebook login"); 
+              loginForm.submit();
+            } else if (button.closest("#signupModal")) {
+              disableRequiredFields(signUpFields);
+              console.log("Simulating Google/Facebook signup"); // Replace with actual logic
+              signUpForm.submit();
+            }
+          });
+        });
+      
+        // Re-enable 'required' attributes for regular submission
+        document.querySelectorAll("#loginModal .btn[type='submit'], #signupModal .btn[type='submit']").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            if (button.closest("#loginModal")) {
+              enableRequiredFields(loginFields);
+            } else if (button.closest("#signupModal")) {
+              enableRequiredFields(signUpFields);
+            }
+          });
+        });
+      
+        // Restore 'required' attributes when modals are closed
+        const restoreRequiredOnModalClose = (modal, fields) => {
+          modal.addEventListener("hidden.bs.modal", () => {
+            enableRequiredFields(fields);
+          });
+        };
+      
+        const loginModal = document.querySelector("#loginModal");
+        const signupModal = document.querySelector("#signupModal");
+      
+        if (loginModal) restoreRequiredOnModalClose(loginModal, loginFields);
+        if (signupModal) restoreRequiredOnModalClose(signupModal, signUpFields);
+      });
+</script>      
+<script>
+    var googleLoginUrl = "{% provider_login_url 'google' %}?next=/platform_db/complete-signup/";
+    var csrfToken = "{{ csrf_token }}";
+    var signupUrl = "{% url 'platform_db:signup' %}";
+
+    // Assign the URLs to the window object for global access
+    window.googleLoginUrl = googleLoginUrl;
+    window.facebookLoginUrl = facebookLoginUrl;
+    console.log("Google Login URL:", window.googleLoginUrl);
+    //console.log("Facebook Login URL:", window.facebookLoginUrl);
+</script>
+
+<script>
+    function updateCartBadge() {
+        fetch("{% url 'platform_db:get_cart' %}")  // Fetch cart data from Django
+            .then(response => response.json())
+            .then(data => {
+                let totalItems = (data.cart || []).reduce((sum, item) => sum + (item.quantity || 0), 0);
+                let cartBadge = document.getElementById("cartBadge");
+
+                if (cartBadge) {
+                    if (totalItems > 0) {
+                        cartBadge.textContent = totalItems;
+                        cartBadge.style.display = "inline-block"; // Show badge
+                    } else {
+                        cartBadge.style.display = "none"; // Hide badge if empty
+                    }
+                }
+            })
+            .catch(error => console.error("🛑 Error updating cart badge:", error));
+    }
+
+    // 🔹 Faster Execution - Update Badge Instantly on Page Load
+    document.addEventListener("DOMContentLoaded", () => {
+        updateCartBadge();
+        
+        // 🔹 Reduce Delay - Faster refresh rate
+        {% if user.is_authenticated %}
+            setInterval(updateCartBadge, 2000);  // Refresh every 2 seconds instead of 5
+        {% endif %}
+    });
+
+    // 🔹 Instant Badge Update on Add/Remove
+    function triggerCartUpdate() {
+        updateCartBadge();  // Update immediately when a cart action occurs
+    }
+</script>
+
+<!-- Toast for login success -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="loginToast" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body">
+        ✅ Login successful! Redirecting...
+      </div>
+    </div>
+</div>
+
+        
+<!-- Load your JS files -->
+<script src="{% static 'js/signup.js' %}"></script>
+<script src="{% static 'js/login.js' %}"></script>
+<script src="{% static 'js/location.js' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>
+<script src="{% static 'js/oauth.js' %}"></script>

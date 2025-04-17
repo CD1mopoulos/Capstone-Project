@@ -1,0 +1,72 @@
+{% extends 'platform_db/base.html' %}
+{% load socialaccount %}  {# Load Allauth tags for Google signup #}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <h2 class="text-center text-white mb-4">Sign Up</h2>
+            <form method="POST" action="{% url 'platform_db:signup' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none text-white"
+                        name="name" placeholder="Name" required>
+                    <label class="text-white">Name</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none text-white"
+                        name="surename" placeholder="Surname" required>
+                    <label class="text-white">Surname</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none text-white"
+                        name="username" placeholder="Username" required>
+                    <label class="text-white">Username</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="email" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none text-white"
+                        name="email" placeholder="Email" required>
+                    <label class="text-white">Email</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none text-white"
+                        name="password1" placeholder="Password" required>
+                    <label class="text-white">Password</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none text-white"
+                        name="password2" placeholder="Confirm Password" required>
+                    <label class="text-white">Confirm Password</label>
+                </div>
+
+                <button type="submit" class="btn w-100 text-black bg-white custom-radius">Sign Up</button>
+
+                <p class="mt-3 text-white text-center">Already have an account?
+                    <a href="{% url 'platform_db:user_login' %}" class="text-decoration-underline text-white">Login</a>
+                </p>
+            </form>
+
+            <!-- OR Sign Up with Google -->
+            <div class="signupwith option-text text-white mt-4 text-center">
+                <hr>
+                <p class="mt-0">or sign up with</p>
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="{% provider_login_url 'google' method='oauth2' %}" 
+                   class="btn btn-danger flex-fill d-flex align-items-center justify-content-center">
+                    <i class="fab fa-google me-2"></i> Google
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

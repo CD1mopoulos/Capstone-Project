@@ -1,0 +1,45 @@
+{% extends 'restaurant_manager/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">🍽️ Your Dishes</h2>
+
+    <!-- Add Dish Button aligned left -->
+    <div class="d-flex justify-content-start mb-3">
+        <a href="{% url 'dish_add' %}" class="btn btn-success">
+            ➕ Add New Dish
+        </a>
+    </div>
+
+    {% if dishes %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for dish in dishes %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if dish.photo %}
+                            <img src="{{ dish.photo.url }}" class="card-img-top" alt="{{ dish.dish_name }}">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ dish.dish_name }} - €{{ dish.price }}</h5>
+                            <p class="card-text">{{ dish.description|truncatewords:15 }}</p>
+                        </div>
+
+                        <!-- Buttons close together -->
+                        <div class="card-footer d-flex justify-content-start gap-2">
+                            <a href="{% url 'dish_edit' dish.dish_id %}" class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
+                            <a href="{% url 'dish_delete' dish.dish_id %}" class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted text-center">No dishes available.</p>
+    {% endif %}
+</div>
+{% endblock %}

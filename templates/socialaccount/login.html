@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% block body_class %}login-page{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card p-4 shadow frosted-modal">
+                <h5 class="mb-3 text-center fw-medium fs-5 text-black">Sign In Via Google</h5>
+
+                <p class="text-center fs-6 mb-4 text-black">
+                    You are about to sign in using a third-party account from Google.
+                </p>
+
+                <form method="post" action="{{ form_action }}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-danger w-100 fs-6 py-2">Continue with Google</button>
+                </form>
+
+                <!-- Divider -->
+                <div class="option-text text-center mt-4">
+                    <hr>
+                    <p class="mt-0 text-black">or return back to</p>
+                </div>
+
+                <!-- Manual Login/Signup Links -->
+                <div class="d-flex gap-2 mt-3">
+                    <a href="{% url 'platform_db:user_login' %}" 
+                       class="btn btn-outline-dark flex-fill">
+                        Login
+                    </a>
+                    <a href="{% url 'platform_db:signup' %}" 
+                       class="btn btn-outline-dark flex-fill">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

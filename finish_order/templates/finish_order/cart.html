@@ -1,0 +1,27 @@
+{% extends 'finish_order/base.html' %}
+
+{% block content %}
+    <h2>Your Cart</h2>
+
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>{{ order.quantity }}x {{ order.dish_name }} - €{{ order.price }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    <!-- JavaScript-Managed Cart UI -->
+    <div id="cartSection" style="display: none;">
+        <h3>🛒 Your Cart</h3>
+        <div id="cartContainer"></div>
+        <p id="cartSummary">Total: €0.00</p>
+        <button id="checkoutButton" class="btn btn-success">Proceed to Checkout</button>
+    </div>
+    
+
+    <!-- Cart Toggle Button -->
+    <button id="toggleCart" class="btn btn-primary">View Cart</button>
+{% endblock %}

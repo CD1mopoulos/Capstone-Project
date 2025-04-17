@@ -1,0 +1,156 @@
+{% load static %}
+
+<div id="chatbot-container">
+    <div id="chatbot-header">
+        Chat with Nomie
+        <span id="chatbot-toggle" style="float: right; cursor: pointer;">&#x25B2;</span>       
+    </div>
+
+    <div id="chatbot-body">
+        <div id="chatbot-messages"></div>
+
+        <div id="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Ask about the menu...">
+            <button id="chatbot-send">Send</button>
+        </div>
+    </div>
+
+    <!-- 💬 Circle icon shown only when minimized -->
+    <div id="chatbot-icon"><i class="fas fa-comment-alt"></i></div>
+</div>
+
+
+
+<style>
+    #chatbot-container {
+        visibility: hidden;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        height: 400px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+        z-index: 9999;
+        animation: slideInUp 0.5s ease;
+        transition: all 0.3s ease; /* for smooth restore */
+    }
+
+    #chatbot-container:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    #chatbot-icon {
+        display: none; /* Start hidden */
+        visibility: hidden; /* Avoid ghost rendering */
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: #333;
+        color: white;
+        font-size: 22px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10001;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+
+    #chatbot-icon i {
+        font-size: 20px;
+        line-height: 1;
+    }
+    
+    @keyframes slideInUp {
+        from {
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+
+    #chatbot-header {
+        background: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        user-select: none;
+        position: relative;
+    }
+
+    #chatbot-toggle {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    #chatbot-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #chatbot-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        max-height: 300px; /* set a scrollable max height */
+        scrollbar-width: thin; /* for Firefox */
+    }
+    
+    #chatbot-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    #chatbot-messages::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+    
+
+    #chatbot-input-area {
+        display: flex;
+        padding: 5px;
+    }
+
+    #chatbot-input {
+        flex: 1;
+        padding: 5px;
+    }
+
+    #chatbot-send {
+        width: 60px;
+        background: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        pointer-events: auto;
+        z-index: 10000;
+    }
+
+    #chatbot-send:hover {
+        background-color: #555;
+    }
+    #language-toggle span {
+        font-size: 18px;
+        opacity: 0.6;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+</style>

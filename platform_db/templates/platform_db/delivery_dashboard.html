@@ -1,0 +1,130 @@
+{% extends 'platform_db/base.html' %}
+
+{% block content %}
+
+<style>
+    .delivery-heading {
+        font-family: 'Rubik', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #592F2D;
+        margin-bottom: 20px;
+        text-align: center;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+</style>
+
+<div class="container mt-5">
+
+    <!-- My Claimed Deliveries -->
+    <h1 class="delivery-heading">
+        My Claimed Deliveries
+    </h1>
+
+    {% if my_orders %}
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Purchase ID</th>
+                    <th>Customer</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in my_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>#{{ order.purchase.purch_id }}</td>
+                    <td>{{ order.purchase.user.username }}</td>
+                    <td>{{ order.purchase.user.userdetails.address }}</td>
+                    <td>{{ order.purchase.user.userdetails.phone }}</td>
+                    <td>{{ order.status|title }}</td>
+                    <td>
+                        {% if order.status == 'assigned' %}
+                            <a href="{% url 'platform_db:update_delivery_status' order.id 'picked' %}" class="btn btn-warning btn-sm">Mark Picked</a>
+                        {% elif order.status == 'picked' %}
+                            <a href="{% url 'platform_db:update_delivery_status' order.id 'delivered' %}" class="btn btn-success btn-sm">Mark Delivered</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">No deliveries claimed yet.</p>
+    {% endif %}
+
+
+    <!-- Available Orders -->
+    <h1 class="delivery-heading mt-5">
+        Available Orders to Claim
+    </h1>
+
+    {% if available_orders %}
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Purchase ID</th>
+                    <th>Customer</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Order Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in available_orders %}
+                <tr>
+                    <td>#{{ order.purch_id }}</td>
+                    <td>{{ order.user.username }}</td>
+                    <td>{{ order.user.userdetails.address }}</td>
+                    <td>{{ order.user.userdetails.phone }}</td>
+                    <td>{{ order.timestamp }}</td>
+                    <td>
+                        <a href="{% url 'platform_db:claim_order' order.purch_id %}" class="btn btn-success btn-sm">Claim Order</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">No available orders to claim at the moment.</p>
+    {% endif %}
+
+
+    <!-- My Delivered Orders -->
+    <h1 class="delivery-heading mt-5">
+        My Delivered Orders
+    </h1>
+
+    {% if delivered_orders %}
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Purchase ID</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in delivered_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>#{{ order.purchase.purch_id }}</td>
+                    <td>{{ order.status|title }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">No delivered orders yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

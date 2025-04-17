@@ -1,0 +1,51 @@
+{% load static %}
+<footer>
+    <div class="footer-container py-3">
+      <!-- Footer Sections -->
+      <div class="footer-sections d-flex justify-content-around text-center">
+        <!-- About Us -->
+        <div class="footer-section">
+          <h2 class="footer-title">About Us</h2>
+          <p class="footer-text"><a href="{% url 'aboutus:aboutus' %}" class="footer-link">Information</a></p>
+          <p class="footer-text"><a href="{% url 'aboutus:aboutus' %}" class="footer-link">FAQs</a></p>
+          <p class="footer-text"><a href="{% url 'contact:contact' %}" class="footer-link">Contact Us</a></p>
+        </div>
+  
+        <!-- Phone Order -->
+        <div class="footer-section">
+          <h2 class="footer-title">Phone Order</h2>
+          <p class="footer-text"><a href="tel:+3018000" class="footer-phone">18 000</a></p>
+          <p class="footer-text"><a href="tel:+308010000000" class="footer-phone">801 0000000</a></p>
+          <p class="footer-text"><a href="tel:+302110000000" class="footer-phone">+30 211 0000000</a></p>
+          <p class="footer-text"><a href="tel:+302110001234" class="footer-phone">+30 211 0001234</a></p>
+        </div>
+  
+        <!-- Contact Information -->
+        <div class="footer-section">
+          <h2 class="footer-title">Communication Information</h2>
+          <p class="footer-text">NomNomNow</p>
+          <p class="footer-text">1234 Food Street
+            <a href="https://www.google.com/maps?q=38.05434639387667,23.768248970064693" target="_blank" class="footer-link">View on Map</a>
+          </p>
+          <p class="footer-text">Athens, Greece</p>
+          <p class="footer-text">Phone: <a href="tel:+3018000" class="footer-phone">18 000</a></p>
+          <p class="footer-text">
+            Email: 
+            <a href="mailto:info@nomnomnow.com" class="footer-link">info@nomnomnow.com</a>
+          </p>
+        </div>
+  
+        <!-- Social Media Section -->
+        <div class="footer-section">
+          <h2 class="footer-title">Follow Us On</h2>
+          <div class="social-media d-flex justify-content-center gap-2">
+            <a href="https://www.facebook.com/" class="btn facebook-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/?lang=el" class="btn twitter-btn"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/" class="btn instagram-btn"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/" class="btn linkedin-btn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  

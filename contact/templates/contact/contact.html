@@ -1,0 +1,221 @@
+{% extends 'contact/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Cart Section -->
+<div id="cartSection" class="pt-5 mt-5 text-center">
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+
+        <div id="cartContainer">
+            <!-- Items will be injected by JavaScript or rendered by Django -->
+        </div>
+
+        <p id="cartSummary">Total: €0.00</p>
+
+        <!-- Action buttons in the same row -->
+        <div class="cart-buttons">
+            <button id="empty-cart" class="btn btn-danger">🗑️ Empty Cart</button>
+
+            <a href="{% url 'platform_db:checkout' %}" id="checkoutButton" class="btn checkout-btn">
+                Proceed to Checkout
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Contact Us Section -->
+<section id="contactus_section" class="pt-5"> 
+    <div class="contactusform-container my-5 main-content">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-6">
+            <h1 class="contact-title">Contact Us</h1>
+            <p class="contact-text">
+              Have questions about your order? Need help? Fill out the form below, and our team will get back to you shortly.
+            </p>
+  
+            <form class="contact-form" action="{% url 'contact:send_contact_email' %}" method="POST">
+              {% csrf_token %}
+  
+              <div class="form-group row">
+                <label for="name" class="form-label col-sm-3 text-right">Full Name:</label>
+                <div class="col-sm-9">
+                  <input type="text" id="cname" name="name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="email" class="form-label col-sm-3 text-right">Email:</label>
+                <div class="col-sm-9">
+                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="phone" class="form-label col-sm-3 text-right">Phone Number:</label>
+                <div class="col-sm-9">
+                  <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number">
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="subject" class="form-label col-sm-3 text-right">Subject:</label>
+                <div class="col-sm-9">
+                  <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter the subject" required>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <label for="message" class="form-label col-sm-3 text-right">Message:</label>
+                <div class="col-sm-9">
+                  <textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter your message" required></textarea>
+                </div>
+              </div>
+  
+              <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
+                  <button type="submit" class="btn btn-primary contact-submit-btn">Submit</button>
+                </div>
+              </div>
+            </form>
+  
+            <!-- ✅ Success Modal -->
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="border-radius: 15px;">
+                  <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                    <p>Your message has been sent successfully!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- ✅ Modal Trigger Script -->
+            {% if messages %}
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                {% for message in messages %}
+                  {% if message.tags == 'success' %}
+                    successModal.show();
+                  {% endif %}
+                {% endfor %}
+              });
+            </script>
+            {% endif %}
+  
+            <!-- ✅ Optional animation style -->
+            <style>
+              .modal-content {
+                animation: zoomIn 0.4s ease;
+              }
+  
+              @keyframes zoomIn {
+                from {
+                  transform: scale(0.8);
+                  opacity: 0;
+                }
+                to {
+                  transform: scale(1);
+                  opacity: 1;
+                }
+              }
+            </style>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Review Section -->
+ {% if user.is_authenticated %}
+ {% if missing_profile %}
+   <div class="text-center mt-5">
+     <h4>Please complete your profile first!</h4>
+     <p>You need to provide your name and surname before submitting a review.</p>
+     <a href="{% url 'platform_db:update_profile' %}" class="btn btn-primary">Update Profile</a>
+   </div>
+ {% else %}
+   <!-- Render the form with prefilled name/surname -->
+   <section>
+     <div class="contactus-container my-5 main-content navbar-fixed-offset">
+       <div class="container pt-5">
+         <div class="row justify-content-center align-items-center">
+           <div class="col-lg-6">
+             <h1 class="contact-title">We Value Your Feedback!</h1>
+             <p class="contact-text">We value your opinion and would love to hear your thoughts! Share your comments about your experience with our platform.</p>
+           </div>
+         </div>
+       </div>
+
+       <div class="form-container" style="max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 10px;">
+         <form action="{% url 'contact:submit_comment' %}" method="POST">
+           {% csrf_token %}
+           
+           <!-- Name Input (auto-fill and editable) -->
+            <div style="margin-bottom: 15px; display: flex; align-items: center;">
+                <label for="name" style="font-weight: bold; width: 150px; margin-right: 10px;">Name:</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       value="{{ user_details.name|default_if_none:'' }}"
+                       required
+                       style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" />
+            </div>
+  
+            <!-- Surname Input (auto-fill and editable) -->
+            <div style="margin-bottom: 15px; display: flex; align-items: center;">
+                <label for="surname" style="font-weight: bold; width: 150px; margin-right: 10px;">Surname:</label>
+                <input type="text"
+                       id="surname"
+                       name="surname"
+                       value="{{ user_details.surename|default_if_none:'' }}"
+                       required
+                       style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" />
+            </div>
+  
+  
+
+           <!-- Review Input -->
+           <div style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+             <label for="review" style="font-weight: bold; width: 150px; margin-right: 10px; margin-top: 5px;">Leave Your Review:</label>
+             <textarea
+               id="review"
+               name="review"
+               rows="5"
+               placeholder="Write your feedback here..."
+               required
+               style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"
+             ></textarea>
+           </div>
+
+           <!-- Submit Button -->
+            <div style="text-align: left; margin-left: 160px;">
+                <button
+                    type="submit"
+                    style="background-color: #007bff; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;">
+                    Submit
+                </button>
+                <style>
+                    @media (max-width: 576px) {
+                      .form-container button {
+                        width: 100%;
+                      }
+                    }
+                  </style>                  
+            </div>
+         </form>
+       </div>
+     </div>
+   </section>
+ {% endif %}
+{% else %}
+ <p class="text-center mt-5">Please <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">log in</a> to leave a review.</p>
+{% endif %}
+{% endblock %}

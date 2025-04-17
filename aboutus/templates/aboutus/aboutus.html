@@ -1,0 +1,142 @@
+{% extends 'aboutus/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Cart Section -->
+<div id="cartSection" class="pt-5 mt-5 text-center">
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+
+        <div id="cartContainer">
+            <!-- Items will be injected by JavaScript or rendered by Django -->
+        </div>
+
+        <p id="cartSummary">Total: €0.00</p>
+
+        <!-- Action buttons in the same row -->
+        <div class="cart-buttons">
+            <button id="empty-cart" class="btn btn-danger">🗑️ Empty Cart</button>
+
+            <a href="{% url 'platform_db:checkout' %}" id="checkoutButton" class="btn checkout-btn">
+                Proceed to Checkout
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- About Us Section -->
+<section id="aboutus_section" class="pt-5">
+    <div class="section_faq">
+        <div class="aboutus-container my-5 main-content">
+            <div class="row justify-content-center align-items-center" style="height: 30vh;">
+                <div class="col-12">
+                    <h1>Discover NomNomNow!</h1>
+                    <p>At NomNomNow, we believe that food delivery should be more than just a transaction—it should feel personal, easy, and even a little fun! Since 2011, we’ve been bringing delicious meals right to your door while making the whole process as seamless and enjoyable as possible.</p>
+                </div>
+            </div>
+        </div>
+        <!--<h1>Discover NomNomNow!</h1>
+        <p>At NomNomNow, we believe that food delivery should be more than just a transaction—it should feel personal, easy, and even a little fun! Since 2011, we’ve been bringing delicious meals right to your door while making the whole process as seamless and enjoyable as possible.</p>-->
+        <ul class="faq-list">
+            <li>
+              <button class="question" aria-expanded="false">
+                <span class="question-text">Our Story</span>
+                <span class="toggle-icon"><ion-icon name="add-outline"></ion-icon></span>
+              </button>
+              <div class="answer">
+                <p>It all started with a simple idea: how can we make ordering food better? In 2011, we set out to create a platform that doesn’t just deliver meals but understands what you love to eat. Over the years, our team has worked hard to turn that idea into a reality, using smart technology and a lot of heart to make your dining experience truly special.</p>
+              </div>
+            </li>
+          
+            <li>
+              <button class="question" aria-expanded="false">
+                <span class="question-text">What Makes Us Different</span>
+                <span class="toggle-icon"><ion-icon name="add-outline"></ion-icon></span>
+              </button>
+              <div class="answer">
+                <ul>
+                  <li>Personalized Recommendations: We learn your tastes to suggest restaurants and dishes you’ll love.</li>
+                  <li>A World of Flavors: From Italian and Greek classics to Chinese, Indian, Mexican, and Thai delights, we connect you to a plethora of cuisines that suit every craving.</li>
+                  <li>Exclusive Perks: Regular orders mean more discounts, because who doesn’t love saving money?</li>
+                  <li>Your Personal Assistant: Our chatbot is here to help with order changes or cancellations—no hassle, just help.</li>
+                  <li>Simple & Secure: Setting up an account is quick and easy, so you can focus on the food.</li>
+                </ul>
+              </div>
+            </li>
+          
+            <li>
+              <button class="question" aria-expanded="false">
+                <span class="question-text">What We’ve Achieved</span>
+                <span class="toggle-icon"><ion-icon name="add-outline"></ion-icon></span>
+              </button>
+              <div class="answer">
+                <p>Since day one, we’ve been dedicated to making food delivery smarter and more enjoyable. We’ve partnered with amazing restaurants across Greece, introduced cool features like real-time tracking, and helped thousands of people discover new favorite meals. And we’re just getting started!</p>
+              </div>
+            </li>
+          
+            <li>
+              <button class="question" aria-expanded="false">
+                <span class="question-text">Copyright & Image Usage (CC)</span>
+                <span class="toggle-icon"><ion-icon name="add-outline"></ion-icon></span>
+              </button>
+              <div class="answer">
+                <p>All images used on this site were retrieved through Google Search with Creative Commons usage rights.
+                We respect copyright laws and only utilize visuals labeled for reuse. If you believe any content was used incorrectly, please contact us.</p>
+              </div>
+            </li>
+          
+            <li>
+              <button class="question" aria-expanded="false">
+                <span class="question-text">Looking Ahead</span>
+                <span class="toggle-icon"><ion-icon name="add-outline"></ion-icon></span>
+              </button>
+              <div class="answer">
+                <p>Our mission is to keep improving and finding new ways to make your experience better. We want to be the go-to platform for food delivery, whether you’re craving comfort food or looking to explore something new.</p>
+              </div>
+            </li>
+          
+            <li>
+              <button class="question" aria-expanded="false">
+                <span class="question-text">Join Us!</span>
+                <span class="toggle-icon"><ion-icon name="add-outline"></ion-icon></span>
+              </button>
+              <div class="answer">
+                <p>Ready to find your next favorite meal? Whether it’s your usual order or something adventurous, NomNomNow is here to make every bite better. Thanks for letting us be part of your dining journey—we can’t wait to serve you!</p>
+              </div>
+            </li>
+          </ul>              
+    </div>
+    
+    <div class="testimonials-carousel carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-title">
+            <h1>Users Mention</h1>
+          </div>
+      
+          {% for comment in comments %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="testimonial-item">
+              <p class="testimonial-text">"{{ comment.comment }}"</p>
+              {% with comment.user.userdetails as ud %}
+              <p class="testimonial-author">
+                – {{ ud.name }} {{ ud.surename }}<br>
+                <small>{{ comment.created|date:"F j, Y" }}</small>
+              </p>
+              {% endwith %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target=".testimonials-carousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target=".testimonials-carousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>  
+</section>
+{% endblock %}

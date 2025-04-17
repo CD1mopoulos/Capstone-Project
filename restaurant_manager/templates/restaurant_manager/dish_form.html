@@ -1,0 +1,83 @@
+{% extends 'restaurant_manager/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<style>
+    .dish-form-title, .dish-form-subtitle {
+        font-family: 'Poppins', sans-serif;
+        color: #4C2B27;
+    }
+
+    .dish-form-title {
+        font-weight: 600;
+    }
+
+    .dish-form-subtitle {
+        font-weight: 400;
+    }
+
+    .dish-form-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<div class="container py-5 mt-5">
+    <div class="dish-form-header">
+        <h2 class="dish-form-title mb-3">Dish Form</h2>
+        <p class="dish-form-subtitle">Add your dish information below.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="id_dish_name" class="form-label">Dish Name:</label>
+                    {{ form.dish_name|add_class:"form-control" }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_price" class="form-label">Price:</label>
+                    {{ form.price|add_class:"form-control" }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_description" class="form-label">Description:</label>
+                    {{ form.description|add_class:"form-control" }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_ingredients" class="form-label">Ingredients:</label>
+                    {{ form.ingredients|add_class:"form-control" }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_search_tag" class="form-label">Search Tag:</label>
+                    {{ form.search_tag|add_class:"form-control" }}
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_photo" class="form-label">Photo:</label>
+                    {{ form.photo|add_class:"form-control" }}
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-dark">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

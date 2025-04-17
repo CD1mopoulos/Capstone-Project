@@ -1,0 +1,18 @@
+Hello {{ name }} {{ surname }},
+
+Thank you for your order! Here are your details:
+
+Address: {{ address }}
+Phone: {{ phone }}
+Allergies: {{ allergies }}
+
+Your Order:
+{{ order_summary }}
+
+Payment Method: {{ payment_method }}
+
+Total: €{{ total_price }}
+
+We'll deliver your order soon!
+Best regards,  
+NomNomNow Team

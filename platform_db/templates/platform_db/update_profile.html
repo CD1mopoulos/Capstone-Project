@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Complete Your Profile</h2>
+    <p class="text-center">Please enter your full name to continue.</p>
+
+    <form id="profileUpdateForm">
+        {% csrf_token %}
+        <div class="form-floating mb-4">
+            <input type="text" class="form-control bg-transparent border-0 border-bottom rounded-0 shadow-none"
+                   id="fullName" name="full_name" placeholder="Enter your full name" required>
+            <label for="fullName" class="form-label">Full Name</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Save</button>
+        <div id="updateMessage" class="text-center mt-3"></div>
+    </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("profileUpdateForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+
+        fetch("{% url 'update_profile' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let messageBox = document.getElementById("updateMessage");
+            messageBox.innerHTML = ""; 
+
+            if (data.success) {
+                messageBox.innerHTML = "<p class='text-success'>Profile updated! Redirecting...</p>";
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1500);
+            } else {
+                messageBox.innerHTML = `<p class='text-danger'>⚠️ ${data.error}</p>`;
+            }
+        })
+        .catch(error => console.log("Profile Update Error:", error));
+    });
+});
+</script>
+{% endblock %}

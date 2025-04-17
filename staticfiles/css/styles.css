@@ -1,0 +1,1606 @@
+/* Reset margin, padding, and box-sizing globally */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Full height for the html and body */
+  html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #E8BB9D !important;
+    scroll-behavior: smooth;
+  }
+
+  
+  /* Main content area should grow and take the remaining space */
+  .main-content {
+    flex-grow: 1;
+  }
+
+  .navbar {
+    background-color: #D0BDAD !important; /* Apply background color to the entire navbar */
+    height: 95px; /* Decrease height */
+    width: auto; /* Adjust width */
+    margin: 0 auto; /* Center the navbar horizontally */
+    display: flex; /* Ensure proper alignment */
+    justify-content: center; /* Center the content inside the navbar */
+    align-items: center; /* Vertically align the content */
+  }
+
+
+  /* Navbar custom styles */
+  .navbar-custom {
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1rem; /* Ensure consistent padding */
+  }
+  
+  .nav-link {
+    color: #000 !important; /* Change color to black */
+  }
+    
+  .navbar-nav .nav-item .nav-link {
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .navbar-nav .nav-item .nav-link:hover,
+  .navbar-nav .nav-item .nav-link:focus {
+    box-shadow: 0px 0px 8px rgb(255, 255, 255);
+    border-radius: 4px;
+  }
+  
+  .nav-link.active{
+    border-bottom: 3px solid #fff;
+  }
+  
+  /* Logo styling */
+  .navbar-brand img {
+    width: 150px;
+    height: auto;
+    max-height: 80px;
+  }
+  
+  /* Hamburger icon styling */
+  .navbar-toggler {
+    background-color: transparent !important; /* Set background color */
+    border: none; /* Remove border */
+    padding: 0.5rem 1rem; /* Adjust padding */
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .navbar-toggler:hover {
+    background-color: #D0A07D; /* Darker beige on hover */
+  }
+  
+  /* Change the burger lines color to a more appropriate color */
+  .navbar-toggler-icon {
+    background-color: transparent !important;
+    border-radius: 2px;
+    width: 24px;
+    height: 3px;
+  }
+  
+  .offcanvas {
+    background-color: transparent !important; /* Set background color for the offcanvas */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .offcanvas .nav-link {
+    color: black !important;
+  }
+  
+  .offcanvas .nav-link:hover {
+    color: white;
+  }
+  
+  /* Line indicating current page */
+  .navbar-nav .nav-item.active .nav-link {
+    position: relative;
+  }
+  
+  .navbar-nav .nav-item.active .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #592F2D;
+    bottom: -5px; /* Distance from text */
+    left: 0;
+  }
+  
+  /* Search bar integration */
+  .search-bar {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    max-width: 400px;
+    margin: auto;
+    justify-content: center;
+  }
+  
+  .search-bar input {
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    padding: 5px 15px;
+    width: 80%;
+    flex-grow: 1;
+    color: #fff;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+  .search-bar input:focus {
+    outline: none;
+    border-color: #E8BB9D;
+  }
+  
+  .search-bar button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .search-bar .search-btn {
+    background: transparent !important; /* Set default background to #D0BDAD */
+    color: black; /*#592F2D*/
+    border: none;
+    border-radius: 1.5em;
+    padding: 0.5em 1em;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-bar .search-btn:hover {
+    background: transparent !important; /* Set hover background to #D0BDAD */
+  }
+  
+  .offcanvas-header {
+    position: relative;
+    padding: 10px; /* Optional: Adjust spacing as needed */
+  }
+  
+  .offcanvas-header .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent; /* Matches background */
+    border: none;
+    font-size: 1.5rem; /* Adjust size */
+    cursor: pointer;
+    outline: none;
+  }
+  /*------------------------------------Login/Signup------------------------------------*/
+  /* Modal Header Styling */
+  .modal-header {
+    color: white; /* White text for visibility */
+    padding: 10px; /* Space inside the header */
+    font-size: 1.25rem; /* Slightly larger font size for the title */
+    border-bottom: 1px solid #fff; /* Optional: add a light border for separation */
+    border-top-left-radius: 20px; /* Rounded corners for top left */
+    border-top-right-radius: 20px; /* Rounded corners for top right */
+  }
+  
+  .modal-header .modal-title {
+    font-weight: bold; /* Ensure the title is bold */
+    text-align: center; /* Center the title text */
+    width: 100%; /* Ensure it takes up the full width */
+  }
+  
+  .modal-header .btn-close {
+    color: white; /* White close button */
+  }
+  
+  /* Off-canvas Modal Styling */
+  .offcanvas .modal-content.frosted-modal {
+    border-radius: 20px; /* Add rounded corners */
+  }
+  
+  /* Spacing between Search Bar and Buttons */
+  .offcanvas .nav-item:last-child {
+    margin-top: 15px; /* Add spacing */
+    display: flex; /* Enable flexbox for the parent */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 15px; /* Add space between buttons */
+  }
+  
+  /* Off-canvas Button Styles */
+  .offcanvas .btn-outline-light {
+    color: #fff; 
+    border-color: #fff;
+    font-size: 0.875rem;
+    border-radius: 50px; 
+    transition: all 0.3s ease;
+  }
+  
+  .offcanvas .btn-outline-light:hover,
+  .offcanvas .btn-outline-light:focus {
+    background-color: #592F2D;
+    color: #fff;
+  }
+  
+  /* Adjust responsiveness for smaller screens */
+  @media (max-width: 768px) {
+    .navbar-nav {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .navbar-brand img {
+      max-width: 100px;
+      height: auto;
+    }
+  
+    .navbar-toggler {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  
+    .search-bar {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  
+  
+  
+  /* Modal size */
+  .modal-dialog {
+    max-width: 450px; /* Standardize size for both modals */
+  }
+  
+  /* Content background with frosted effect */
+  .modal-content.frosted-modal {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    border-radius: 20px; /* Adjust for a more consistent look */
+  }
+  
+  /* Modal text size */
+  .modal-body.fs-6, .modal-body.fs-sm-5, .modal-body.fs-md-6 {
+    font-size: 1rem; /* Ensure text size is consistent with the screenshot */
+  }
+  
+  /* Modal form labels */
+  .form-floating label {
+    font-size: 0.9rem; /* Slightly smaller for a cleaner look */
+  }
+  
+  /* Customize input icons */
+  .form-floating ion-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 30px;
+    color: #fff;
+    font-size: 1.2em;
+  }
+  
+  /* Close button on modals */
+  .btn-close {
+    opacity: 1 !important;
+    transition: background-color 0.1s ease, border-radius 0.1s ease !important;
+  }
+  
+  .btn-close:hover {
+    background-color: #fff;
+    border-radius: 30px;
+  }
+  
+  /* Login and signup button styling */
+  .btn {
+    font-size: 1rem; /* Consistent with modal text */
+    background-color: #fff;
+    color: black;
+  }
+  
+ 
+  
+  /* Modal positioning */
+  .custom-modal-position {
+    position: fixed;
+    top: 1%;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    z-index: 1055;
+  }
+
+  .signupwith {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 2px !important;  /* Reduce top margin */
+    margin-bottom: 2px !important; /* Reduce bottom margin */
+    padding: 5px;
+  }
+
+  .loginwith{
+    border-top: 2px solid #fff !important;
+    display: flex; /* Enables flexbox */
+    flex-direction: column; /* Ensures elements are stacked vertically */
+    justify-content: center; /* Centers items vertically */
+    align-items: center; /* Centers items horizontally */
+    text-align: center; /* Ensures text is centered inside the flex container */
+  }
+
+  
+  .logout-link {
+    padding: 0.4rem 0.6rem; /* Match cart/profile size */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logout-icon {    
+    font-size: 200rem !important; /* Match size with profile and cart icons */
+    color: white; /* Default color */
+    padding: 0.4rem 0.6rem; /* Match padding with profile and cart icons */
+    transition: color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .logout-icon:hover {
+    color: red !important; /* Change color on hover */
+    cursor: pointer; /* Make it clickable */
+  }
+
+/* Ensure both buttons have the same width */
+.btn-google,
+.btn-facebook {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px !important;
+    font-weight: bold;
+    width: 250px !important; /* Set an explicit fixed width */
+    height: 50px; /* Ensure they have equal height */
+    padding: 12px 20px !important; /* Consistent padding */
+    border-radius: 5px;
+    cursor: pointer;
+    gap: 10px;
+    text-decoration: none; /* Remove underlines */
+}
+
+/* Google Button */
+.btn-google {
+    background-color: #db4437 !important;
+    color: white;
+}
+
+.btn-google:hover {
+    background-color: #c33d2e;
+}
+
+/* Facebook Button */
+.btn-facebook {
+    background-color: #3b5998 !important;
+    color: white;
+}
+
+.btn-facebook:hover {
+    background-color: #2d4373;
+}
+
+/* Button group styling */
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Ensures vertical alignment */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+    .modal-dialog {
+        max-width: 90%;
+    }
+    
+    .btn-google,
+    .btn-facebook {
+        width: 100%; /* Full width on smaller screens */
+    }
+    
+    .button-group {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px;
+    }
+}
+
+  	/* Icon Styling */
+  .btn-google i,
+  .btn-facebook i {
+      font-size: 18px;
+      vertical-align: middle;
+  }
+
+/* Navbar link spacing for all buttons/icons */
+.navbar .nav-link,
+.navbar .logout-link {
+    padding: 0.4rem 0.6rem;
+}
+
+/* Navbar icons (cart, profile, logout) */
+.navbar .nav-link i,
+.navbar .logout-link ion-icon,
+.navbar .logout-icon {
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+/* Badge styling (cart notification) */
+.navbar .badge {
+    font-size: 0.7rem;
+    padding: 0.3em 0.5em;
+    top: -2px;
+    right: -8px;
+}
+
+  
+  /* Navbar button styles */
+  .navbar .btn-outline-light {
+    color: #592F2D; /* Matches the color scheme */
+    border-color: #592F2D; /* Border matches the text */
+    font-size: 0.875rem; /* Consistent with navbar font size */
+    border-radius: 50px; /* Make buttons round */
+    transition: all 0.3s ease;
+  }
+  
+  .navbar .btn-outline-light:hover,
+  .navbar .btn-outline-light:focus {
+    background-color: #592F2D; /* Reverse scheme on hover */
+    color: #fff; /* Text turns white */
+  }
+  
+  .navbar-fixed-offset {
+    padding-top: 60px !important; /* Adjust to match your navbar height */
+  }
+
+  @media (max-width: 992px) {
+    .navbar .btn-outline-light {
+      margin-bottom: 0.5rem; /* Add spacing for stacked layout */
+      width: 100%; /* Full-width buttons on smaller screens */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .offcanvas {
+        background-color: #333; /* Match navbar color */
+    }
+  
+    .offcanvas-title {
+        color: white;
+    }
+  
+    .offcanvas-body {
+        padding: 1rem;
+    }
+  
+    .btn-close {
+        filter: invert(1); /* Make close button white */
+    }
+  }
+  
+  /* Better readability of text*/
+  /* Ensure input text is readable on both dark and light backgrounds */
+  #loginModal .form-control,
+  #signupModal .form-control {
+    background-color: rgba(255, 255, 255, 0.2); /* Light semi-transparent background */
+    color: #fff !important; /* White text for contrast */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
+  }
+
+  /* Placeholder color for better visibility in modals */
+  #loginModal .form-control::placeholder,
+  #signupModal .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  /* Ensure input text remains visible when user types */
+  #loginModal .form-control:focus,
+  #signupModal .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.3); /* Slightly more visible on focus */
+    color: #fff !important;
+    border: 1px solid #fff; /* Stronger border to indicate focus */
+  }
+
+  /* Ensure labels inside login/signup modals remain visible */
+  #loginModal .form-floating label,
+  #signupModal .form-floating label {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Adjust the eye icon inside password fields only in modals */
+  #loginModal ion-icon,
+  #signupModal ion-icon {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  /*----End of better readability of text----*/
+  
+  /*------------------------------------Login/Signup End------------------------------------*/
+  
+  /* Footer layout */
+  .footer-sections {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap; /* Ensure responsiveness for smaller screens */
+  }
+
+/*------------------------------cart function css start----------------------------------*/
+  #cartSection {
+    padding-top: 120px !important; /* Increase top padding to push it down */
+    margin-top: 50px !important; /* Additional margin if needed */
+  }
+
+  /* Adjust the cart container styling */
+  .cart-container {
+    max-width: 800px; /* Keep it centered */
+    margin: 0 auto;
+    background-color: transparent !important; 
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+
+/*--------------------- Profile Handling  style-----------------------*/
+
+.profile-heading {
+  color: black;
+  text-align: center;
+}
+
+.payment-method-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-method-container .form-select {
+  text-align: center;
+}
+
+.save-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.save-changes-btn {
+  background-color: #198754;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  border: none;
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* space between buttons */
+  margin-top: 1rem;
+}
+
+.checkout-btn {
+  background-color: #198754 !important;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  text-decoration: none;
+}
+
+.checkout-btn:hover {
+  background-color: #157347 !important;
+  color: white;
+}
+
+#cartBadge {
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 0.35em 0.6em;
+
+  top: -6px !important;
+  right: -10px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 2.1em;
+  height: 1.6em;
+
+  line-height: 1;
+  text-align: center;
+
+  transform: translate(1%, -11%); /* slight vertical tweak */
+}
+
+/* Extra space for 2-digit numbers */
+#cartBadge:has(span),
+#cartBadge:has(:not(:only-child)) {
+  min-width: 2em;
+  padding: 0.35em 0.65em;
+}
+
+
+
+
+
+/*-----------------------cart function css end-----------------------*/
+  
+  .welcome-container {
+    background-color: transparent !important; /* Matches navbar and footer colors for consistency */
+    color: #592F2D; /* Text color for contrast */
+    display: flex; /* Use flexbox for vertical centering */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start !important; /* Align content to the top */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Centers the content horizontally */
+    height: auto; /* Maintain height for vertical alignment */
+    border-top: 2px solid #fff !important;
+    padding-top: 20px; /* Adds space between the border top and the content */
+    margin-bottom: 0px !important;
+  }
+  
+  .welcome-container h1 {
+    font-size: 2.5rem; /* Adjust heading size */
+    margin-bottom: 20px; /* Add margin to create space below the heading */
+  }
+  
+  .welcome-container p {
+    font-size: 1.2rem; /* Adjust paragraph size */
+    margin-top: 10px; /* Add margin to create space above the paragraph */
+  }
+  
+/* __________Home Carousel Styles  ______________*/
+.home-carousel {
+  margin-top: -50px !important; /* Reduce margin to move the carousel higher */
+  width: 100%; /* Ensure the carousel takes full width */
+  max-width: 800px; /* Restrict maximum width for better responsiveness */
+  position: relative; /* Ensure relative positioning for buttons */
+  margin-left: auto; /* Center carousel horizontally */
+  margin-right: auto; /* Center carousel horizontally */
+  border-radius: 20px; /* Rounded corners for the carousel */
+  overflow: hidden; /* Hide overflow content */
+  min-height: 400px; /* Ensure a minimum height to prevent decrement of photos */
+}
+
+.home-carousel .carousel-image {
+  min-width: 400px;
+  max-height: 600p;
+  width: 100%; /* Ensure images take full width of the carousel */
+  max-height: 400px; /* Restrict image height */
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+/* Home Carousel Buttons */
+.home-carousel .carousel-control-prev-icon,
+.home-carousel .carousel-control-next-icon {
+    background-color: transparent; /* Light orange for the carousel controls */
+    border-radius: 50%; /* Rounded icons */
+    padding: 10px; /* Padding for better clickability */
+}
+
+.home-carousel .carousel-control-prev,
+.home-carousel .carousel-control-next {
+    width: 5%; /* Adjust button size */
+}
+
+.home-carousel .carousel-indicators {
+  position: absolute;
+  bottom: 10px; /* Adjust the distance between the indicators and the images */
+  left: 50%;
+  transform: translateX(-50%); /* Center indicators horizontally */
+  z-index: 1; /* Ensure the indicators are above the images */
+}
+
+
+
+/* Testimonials Carousel Styles */
+.testimonial-item {
+  background-color: #A6A66D; /* Olive green background for the testimonial box */
+  border-radius: 10px;
+  padding: 1.5rem; /* Reduced padding to make the container smaller */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center; /* Center align the text inside the testimonial box */
+  width: 80%; /* Reduce the width of the container */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.testimonial-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #000000; /* Black text for the testimonial content */
+  margin-bottom: 1rem; /* Add space between the text and the author */
+}
+
+.testimonial-author {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #000000; /* Black text for the testimonial author */
+}
+
+.testimonials-carousel {
+  border-top: 2px solid #fff; /* White border at the top */
+  background-color: transparent; /* Transparent background */
+  color: #E8BB9D; /* Light beige/orange text color for contrast */
+  padding: 3rem 0; /* Increased top padding for better spacing */
+}
+
+.testimonials-carousel .carousel-inner {
+  padding: 2rem; /* Add spacing inside the carousel */
+}
+
+.testimonials-carousel .testimonial-item {
+  background-color: #A6A66D; /* Olive green background for the testimonial box */
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.testimonials-carousel .testimonial-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #000000; /* Black text for the testimonial content */
+}
+
+.testimonials-carousel .testimonial-author {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #000000; /* Black text for the testimonial author */
+  margin-top: 1rem;
+}
+
+.testimonials-carousel .carousel-control-prev-icon,
+.testimonials-carousel .carousel-control-next-icon {
+  background-color: transparent !important; /* Light beige for the carousel controls */
+  width: 2rem; /* Adjust icon size */
+  height: 2rem;
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.testimonials-carousel .carousel-control-prev,
+.testimonials-carousel .carousel-control-next {
+  position: absolute;
+  top: 56%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+  width: 5%; /* Adjust the width if needed */
+  height: 100%; /* Stretch the buttons vertically */
+  color: #E8BB9D; /* Matches your theme */
+  z-index: 5; /* Ensure they appear above content */
+}
+
+.testimonials-carousel .carousel-control-prev {
+  left: 11%; /* Position on the left side */
+}
+
+.testimonials-carousel .carousel-control-next {
+  right: 11%; /* Position on the right side */
+}
+
+.testimonials-carousel .carousel-indicators [data-bs-target] {
+  background-color: #E8BB9D; /* Light orange for indicator dots */
+}
+
+  /* Adjust the container size and spacing */
+  .Restaurant-Container .card{
+    background-color: transparent !important; /* Matches navbar and footer colors for consistency */
+    color: #592F2D; /* Text color for contrast */
+    padding: 20px 20px; /* Adds spacing around the container */
+    text-align: center; /* Centers the content horizontally */
+    border: 1px solid #fff; /* Adds a border around the container */
+    border-radius: 50px; /* Rounds the edges of the container */
+    max-width: 650px; /* Set max-width for large screens */
+    width: 100%; /* Allow grid to be responsive */
+    margin: 10px auto; /* Adds 20px top margin and centers horizontally */
+    display: flex; /* Use flexbox for vertical centering */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Aligns content horizontally */
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .food-menu-container .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the items horizontally */
+    gap: 20px; /* Add a gap between the items */
+  }
+  
+  .card-img-top {
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .food-menu-container .card {
+    transition: transform 0.2s ease;
+  }
+  
+  .food-menu-container .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .Restaurant-Container h1, .food-menu-container h1, .carousel-title {
+    font-size: 2.5rem; /* Adjust heading size */
+    margin-bottom: 20px;
+  }
+  
+
+  .card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+  }
+  
+  .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .aboutus-container {
+    background-color: transparent !important; /* Matches navbar and footer colors for consistency */
+    color: #592F2D; /* Text color for contrast */
+    display: flex; /* Use flexbox for vertical centering */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start !important; /* Align content to the top */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Centers the content horizontally */
+    height: 10vh; /* Maintain height for vertical alignment */
+    border-top: 2px solid #fff !important;
+  }
+  
+  .aboutus-container p {
+    font-size: 1.2rem; /* Adjust paragraph size */
+    /*margin-top: 10px;*/
+  }
+  
+  .section_faq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .section_faq h1 {
+    font-size: 3rem;
+  }
+  
+  .section_faq ul {
+    margin: 3rem auto;
+    width: 75%;
+    max-width: 900px;
+  }
+  
+  .section_faq ul li {
+    list-style: none;
+    margin-bottom: 15px;
+  }
+  
+  .section_faq .question {
+    margin: 1px 0;
+    padding: 20px 40px;
+    width: 100%;
+    background-color: #A6A66D;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: 400;
+    box-sizing: border-box;
+    border-bottom: 1px solid white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .section_faq .question-text {
+    padding-left: 10px;
+  }
+  
+  .section_faq .icon {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 10px;
+    transition: transform 0.25s ease-in-out;
+  }
+  
+  /* FAQ "+" normally */
+  .section_faq .icon::before {
+    content: "+";
+  }
+  
+  /* FAQ "-" when open */
+  .section_faq .question.open .icon::before {
+    content: "−";
+  }
+  
+  .section_faq .answer {
+    max-height: 0;
+    overflow: hidden;
+    /*background-color: transparent;*/
+    font-size: 20px;
+    line-height: 1.5;
+    padding: 0 20px; /* Padding only horizontal */
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+    width: 100%;
+  }
+
+  /* When question is open, reveal answer */
+  .section_faq .question[aria-expanded="true"] + .answer {
+    max-height:500px;
+    opacity: 1;
+    padding: 15px 20px;
+  }
+  
+  /* Only when open - answer expands & gets padding */
+  .section_faq .question.open + .answer {
+    max-height: 1000px; 
+    padding: 15px 20px;
+  }
+  
+  .section_faq .answer span {
+    display: inline-block;
+    padding: 1.2rem 1rem 1.2rem 2rem;
+    width: 100%;
+  }
+  
+  /* Mobile View Adjustments */
+  @media (max-width: 768px) {
+    .section_faq ul {
+      width: 95%;
+      margin: 2rem auto;
+      padding: 0 10px;
+    }
+  
+    .section_faq .question {
+      font-size: 16px;
+      padding: 10px 15px;
+      flex-wrap: wrap;
+      word-break: break-word;
+    }
+  
+    .section_faq .question-text {
+      padding-left: 5px;
+      flex: 1 1 100%;
+      text-align: left;
+    }
+  
+    .section_faq .toggle-icon {
+      margin-top: 5px;
+      font-size: 1.5rem;
+    }
+  
+    .section_faq .answer {
+      max-height: 0;
+      overflow: hidden;
+      background-color: transparent;
+      font-size: px;
+      padding: 0 15px;
+      transition: max-height 0.5s ease, padding 0.5s ease;
+      word-break: break-word;
+      width: 100%;
+    }
+
+    .section_faq .question[aria-expanded="true"] + .answer {
+      padding: 10px 15px;
+    }
+  
+    .section_faq .answer p,
+    .section_faq .answer li {
+      line-height: 1.4;
+      font-size: 14px;
+    }
+  }
+  
+    
+  .carousel-title {
+    font-size: 2.5rem; /* Adjust heading size */
+    color: black;
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    text-align: center; /* Center the text inside the container */
+    margin-top: -40px;
+    margin-bottom: 35px; /* Add bottom margin for more space */
+  }
+  
+  
+  
+  /* Styling for the accordion on smaller screens */
+  @media (max-width: 768px) {
+    .section_faq {
+        padding: 1rem;
+    }
+  
+    .section_faq h1 {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+  
+    .section_faq p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem; /* Add spacing below the paragraph */
+    }
+  
+    .section_faq ul {
+      margin-top: 5rem; /* Add space above the FAQ list */
+      width: 90%;
+    }
+  
+    .section_faq .question {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+  
+    .section_faq .icon {
+        font-size: 2rem;
+    }
+  
+    .section_faq .answer {
+        padding: 10px;
+    }
+  }
+  
+  /* Testimonials carousel adjustments */
+  @media (max-width: 768px) {
+    .testimonial-item {
+        text-align: center;
+        padding: 20px;
+    }
+  
+    .carousel-item {
+        padding: 15px;
+    }
+  }
+
+  
+  .contactus-container {
+    background-color: transparent !important; /* Matches navbar and footer colors */
+    color: #592F2D; /* Text color for contrast */
+    text-align: center; /* Centers the text horizontally */
+    padding-top: 60px !important;
+    padding-bottom: 20px;
+    border-top: 2px solid #fff !important; /* Top border */
+    margin-top: -20px !important; /* Removes additional margin */
+}
+  
+.contact-text {
+  margin-bottom: 2rem; /* Add space below the description */
+  font-size: 1rem;
+}
+
+
+  .form-container {
+    max-width: 600px; /* Ensure form stays compact */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px;
+    border-radius: 10px;
+    background-color: transparent; /* Optional: Add a background to distinguish the form */
+  }
+  
+  .contact-title {
+    font-size: 2rem; /* Adjust as needed */
+    font-weight: bold;
+    margin-top: 10px !important; /* Ensures the title is flush with the container */
+    margin-bottom: 1rem;
+}
+  
+  .contact-info-title {
+    font-size: 1.8rem; /* Make h2 text larger */
+    font-weight: bold;
+    margin-top: 10px; /* Ensures the title is flush with the container */
+    margin-bottom: 1rem; 
+    line-height: 1.5; /* Improves text readability */
+  }
+  
+  
+  .contact-info-text,
+  .contact-info-link {
+    font-size: 1.2rem; /* Adjust as needed */
+    margin: 0.5rem 0; /* Space between elements */
+  }
+  
+
+  
+  .contactusform-container {
+    background-color: transparent; /* Matches existing peach color */
+    color: #592F2D; /* Text color */
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #fff;
+    margin-top: 0;
+  }
+  
+  .contact-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  
+  .contact-text {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .contact-form {
+    text-align: left;
+  }
+  
+  .contact-info-link {
+    color: #000000; /* Default link color */
+    text-decoration: none;
+  }
+  
+ 
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: none;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    border-color: #592F2D;
+    box-shadow: 0 0 5px rgba(89, 47, 45, 0.5);
+  }
+  
+  .contact-submit-btn {
+    background-color: #592F2D;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-submit-btn:hover {
+    background-color: #8a473f;
+  }
+  
+  .contact-info {
+    margin-top: 20px;
+    font-size: 0.9rem;
+  }
+  
+  
+ /* General Footer Section Styles */
+.footer-section {
+  flex: 1;
+  padding: 0 15px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.footer-title {
+  font-size: 1rem; /* Match contact information titles */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.footer-text, .footer-link, .footer-phone {
+  font-size: 0.9rem; /* Consistent font size across sections */
+  margin: 3px 0;
+  color: #592F2D;
+  text-decoration: none;
+}
+
+.footer-link:hover, .footer-phone:hover {
+  color: #8a473f;
+  text-decoration: underline;
+}
+
+  /* Main content area should grow and take the remaining space */
+  .main-content {
+    flex-grow: 1;
+  }
+  
+  /* Footer styling */
+  footer {
+    margin-top: 20px; 
+    background-color: #D0BDAD !important;
+    padding: 20px 0;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 -4px 8px;
+    text-align: center;
+  }
+  
+  .text-center {
+    /*background-color: rgba(0, 0, 0, 0.05);*/
+    border-top: 2px solid #fff;
+    padding: 1rem;
+    font-size: small;
+  }
+  
+  /* Social Media Buttons */
+.social-media .btn {
+  color: #592F2D !important;
+  font-size: 1.2rem;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-media .btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: #fff;
+  outline: 2px solid #fff;
+}
+
+  /* Navbar search form */
+  .search-form {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid #000 !important;
+  }
+  
+  .search-input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #000 !important;
+    width: 200px;
+  }
+  
+  .search-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .search-icon {
+    font-size: 18px;
+    color: black !important; /* Ensures it takes the parent's color */
+  }
+  
+  .search-close {
+    display: none;
+    font-size: 18px;
+    color: #592F2D;
+  }
+  
+  .search-input:focus + .search-button .search-close {
+    display: block;
+  }
+  
+  .search-input:focus + .search-button .search-icon {
+    display: none;
+  }
+  
+
+/*------------------------------------Menu Modal------------------------------------*/
+/* Change modal background color */
+.custom-modal .modal-content {
+  background-color: #E8BB9D !important; /* Custom background */
+  color: #000; /* Optional: Ensures text is readable */
+}
+
+/* Optional: Change header & footer background to match */
+.custom-modal .modal-header,
+.custom-modal .modal-footer {
+  background-color: #D7A184 !important; /* Slightly darker shade */
+  border-color: #C28C72; /* Optional: Match border color */
+}
+
+/* Optional: Customize modal close button */
+.custom-modal .btn-close {
+  filter: invert(1); /* Make close button visible on colored background */
+}
+
+/* Optional: Customize text in modal */
+.custom-modal .modal-title,
+.custom-modal .modal-body {
+  color: #4A2D18 !important; /* Dark brown for contrast */
+}
+
+/* Make only the modal body transparent */
+.custom-modal .modal-body {
+  background-color: transparent !important; /* Fully transparent */
+}
+
+/* Optional: Remove background from list group inside modal */
+.custom-modal .modal-body .list-group {
+  background-color: transparent !important;
+  border: none;
+}
+
+/* Optional: Make text and list items readable */
+.custom-modal .modal-body .list-group-item {
+  background-color: rgba(255, 255, 255, 0.2) !important; /* Light transparency */
+  border: none;
+  color: #000; /* Ensures text is readable */
+}
+
+/* Optional: Style for better visibility */
+.custom-modal .modal-body h6 {
+  color: #000 !important; /* Ensures title is readable */
+}
+
+/* Optional: Make the modal backdrop slightly dark */
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly dark background */
+}
+
+
+/*------------------------------------Menu Modal End------------------------------------*/	
+/*--------------------------Terms and Conditions Page CSS Start-------------------------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.terms-container {
+  background-color: #e6bfa0; 
+  color: #3d2c1d; /* Darker brown text for readability */
+  padding: 20px;
+  border-radius: 15px; 
+  border: 1px solid #fff;
+  max-width: 900px;
+  margin: 40px auto;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+  border-bottom: 10px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  overflow: visible; /* Fixes cut-off issue */
+  min-height: fit-content;
+  padding-bottom: 30px; /* Extra padding to ensure content is visible */
+}
+
+.terms-container h1 {
+  text-align: center;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.terms-container .last-updated {
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.terms-container h1, .terms-container h2 {
+  color: #3d2c1d;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.terms-container p {
+  margin-bottom: 20px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.terms-container ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.terms-container li {
+  margin-bottom: 10px;
+}
+
+.terms-container a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.terms-container a:hover {
+  text-decoration: underline;
+}
+
+
+/*--------------------------Terms and Conditions Page CSS End-------------------------*/
+/*--------------------------Privacy Policy Page CSS Start-----------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.privacy-container {
+  background-color: #e6bfa0; 
+  color: #3d2c1d; /* Dark brown text for readability */
+  padding: 20px;
+  border-radius: 15px; 
+  border: 1px solid #fff;
+  max-width: 900px;
+  margin: 40px auto;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+  border-bottom: 10px;
+  text-align: center; /* Centers all text */
+  font-family: 'Poppins', sans-serif;
+  overflow: visible; /* Fixes cut-off issue */
+  min-height: fit-content;
+  padding-bottom: 30px; /* Extra padding to ensure content is visible */
+}
+
+.privacy-container h1 {
+  text-align: center;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.privacy-container .last-updated {
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.privacy-container h1, .privacy-container h2 {
+  color: #3d2c1d;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.privacy-container p {
+  margin-bottom: 20px;
+  text-align: center; /* Centers paragraph text */
+  font-weight: 400;
+}
+
+.privacy-container ul {
+  list-style-type: none; /* Removes bullet points */
+  padding-left: 0;
+  text-align: center; /* Centers list items */
+}
+
+.privacy-container li {
+  margin-bottom: 10px;
+}
+
+.privacy-container a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.privacy-container a:hover {
+  text-decoration: underline;
+}
+
+/*--------------------------Privacy Policy Page CSS End-----------------------------*/
+#cartSection {
+  display: none;
+}
+
+
+
+/*------------------Checkout Page CSS Start------------------*/
+.order-summary-wrapper {
+  background-color: rgba(255, 255, 255, 0.05); /* soft transparent */
+  border: 2px solid #ffffff; /* solid white border */
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/*-------------------Checkout Page CSS End------------------*/
+
+
+
+
+/*------------------------------------Modal Responsive Fixes------------------------------------*/
+
+/* Allow modal content to scroll on smaller screens */
+.modal-content {
+  max-height: 90vh; /* Prevent from going outside viewport */
+  overflow-y: auto; /* Enable scrolling */
+  padding: 2rem; /* Add padding for breathing room */
+}
+
+/* Ensure frosted effect stays visible without blocking input */
+.frosted-modal {
+  backdrop-filter: blur(10px);
+  background-color: rgba(30, 30, 30, 0.9); /* dark frosted */
+  border-radius: 20px;
+}
+
+/* Fix input focus behavior for mobile */
+input, button, select, textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none !important;
+  background-clip: padding-box;
+}
+
+/* Prevent ion-icon from blocking input field */
+.form-floating ion-icon {
+  z-index: 2;
+  pointer-events: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  font-size: 1.2em;
+  color: #fff;
+}
+
+/* Responsive modal adjustments */
+@media (max-width: 768px) {
+  .modal-dialog {
+      max-width: 90%; /* Make modals wider */
+      margin: 1rem auto; /* Centered with margin */
+  }
+
+  .modal-content {
+      padding: 1rem;
+  }
+
+  .form-floating > label {
+      font-size: 0.85rem;
+  }
+
+  .btn-google,
+  .btn-facebook {
+      width: 100%; /* Full width for OAuth buttons */
+  }
+
+  .button-group {
+      flex-direction: column;
+      gap: 10px;
+  }
+}
+
+/* Optional: Prevent keyboard from hiding inputs */
+@media (max-width: 576px) {
+  .modal {
+      padding: 0 !important;
+  }
+  .modal-content {
+      padding: 1rem;
+  }
+}

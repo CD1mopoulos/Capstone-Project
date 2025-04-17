@@ -1,0 +1,175 @@
+{% extends 'search/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Cart Section -->
+<div id="cartSection" class="pt-5 mt-5 text-center">
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+
+        <div id="cartContainer">
+            <!-- Items will be injected by JavaScript or rendered by Django -->
+        </div>
+
+        <p id="cartSummary">Total: €0.00</p>
+
+        <!-- Action buttons in the same row -->
+        <div class="cart-buttons">
+            <button id="empty-cart" class="btn btn-danger">🗑️ Empty Cart</button>
+
+            <a href="{% url 'platform_db:checkout' %}" id="checkoutButton" class="btn checkout-btn">
+                Proceed to Checkout
+            </a>
+        </div>
+    </div>
+</div>
+<!-- End of Cart Section -->
+ <!-- Search Results Section -->
+<div class="d-flex justify-content-center align-items-center mt-5 pt-5">
+    <div class="p-4" style="max-width: 800px; width: 100%; background-color: #E8BB9D; border: 1px solid #fff2; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);">
+
+        <h1 class="fw-bold mb-4 text-center" style="font-size: 2.2rem;">Search Results for "{{ query }}"</h1>
+
+        {% if not matched_restaurants and not matched_dishes %}
+            <div class="alert alert-warning mt-4 text-center">No results found.</div>
+        {% endif %}
+
+        {% if matched_restaurants %}
+            <div class="row justify-content-center">
+                {% for restaurant in matched_restaurants %}
+                    <div class="col-12 my-3 d-flex justify-content-center">
+                        <div class="card p-2" style="min-height: 380px; width: 100%; max-width: 460px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                            {% if restaurant.photo %}
+                                <img src="{{ restaurant.photo.url }}" class="card-img-top" alt="{{ restaurant.name }}">
+                            {% else %}
+                                <img src="{% static 'images/default-restaurant.jpg' %}" class="card-img-top" alt="No image">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ restaurant.name }}</h5>
+                                <p class="card-text">{{ restaurant.address }}</p>
+                                <div class="d-flex flex-column align-items-center mt-3">
+                                    <p class="badge bg-info mb-2">{{ restaurant.category }}</p>
+                                    <button class="btn btn-primary order-now"
+                                            data-rest-id="{{ restaurant.rest_id }}"
+                                            data-rest-name="{{ restaurant.name }}">
+                                        Check Menu
+                                    </button>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if matched_dishes %}
+            <div class="row justify-content-center">
+                {% for dish in matched_dishes %}
+                    <div class="col-12 col-md-6 my-4 d-flex justify-content-center">
+                        <div class="card h-100 w-100">
+                            {% if dish.photo %}
+                                <img src="{{ dish.photo.url }}" class="card-img-top" alt="{{ dish.dish_name }}">
+                            {% else %}
+                                <img src="{% static 'images/default-food.jpg' %}" class="card-img-top" alt="No image">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ dish.dish_name }}</h5>
+                                <p>{{ dish.description }}</p>
+                                <p><strong>Ingredients:</strong> {{ dish.ingredients }}</p>
+                                <p><strong>Available at:</strong></p>
+                                <ul class="mb-3">
+                                    {% for rest in dish.restaurants.all %}
+                                        <li>{{ rest.name }} – {{ rest.address }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% with dish.restaurants.all.0 as rest %}
+                                <button class="btn btn-success add-to-cart-btn"
+                                        data-dish-id="{{ dish.dish_id }}"
+                                        data-rest-id="{{ rest.rest_id }}"
+                                        data-dish-name="{{ dish.dish_name }}">
+                                    ➕ Add to Cart
+                                </button>
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="mt-4 text-center">
+            <a href="{% url 'home' %}" class="btn btn-secondary">⬅ Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for viewing menu -->
+<div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl custom-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="menuModalLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 id="restaurantName"></h6>
+                <ul class="list-group" id="menuList"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-success" id="viewCart">View Cart 🛒</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/menu_scroll.js' %}"></script>
+
+<!-- ✅ Add to Cart AJAX Script -->
+<script>
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+    
+            if (!isAuthenticated) {
+                alert("🔒 Please log in to add items to your cart.");
+                // Or show the login modal:
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+                return;
+            }
+    
+            const dishId = btn.dataset.dishId;
+            const restId = btn.dataset.restId;
+    
+            fetch("{% url 'platform_db:add_to_cart' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    dishId: dishId,
+                    restaurantId: restId,
+                    quantity: 1
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message) {
+                    alert(`${btn.dataset.dishName} added to cart!`);
+                    triggerCartUpdate();
+                } else {
+                    alert("❌ Failed to add item.");
+                }
+            })
+            .catch(err => {
+                alert("🚫 An error occurred. Please try again.");
+                console.error(err);
+            });
+        });
+    });    
+</script> 
+{% endblock %}
